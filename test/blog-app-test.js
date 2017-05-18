@@ -39,4 +39,22 @@ function tearDownDb() {
     return mongoose.connection.dropDatabase();
 }
 
+describe('Blog post api', function () {
+    before(function () {
+        return runServer(TEST_DATABASE_URL);
+    });
 
+    beforeEach(function () {
+        return seedDatabase();
+    });
+
+    afterEach(function () {
+        return tearDownDb();
+    });
+
+    after(function () {
+        return closeServer();
+    });
+
+
+})
