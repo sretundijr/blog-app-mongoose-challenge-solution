@@ -18,8 +18,8 @@ function createFakeBlogPost() {
             firstName: `${faker.name.firstName()}`,
             lastName: `${faker.name.lastName()}`
         },
-        title: `${faker.random.catch_phrase_descriptor} ${faker.random.catch_phrase_noun}`,
-        content: `${faker.lorem.paragraph}`,
+        title: `${faker.lorem.sentence()}`,
+        content: `${faker.lorem.paragraph()}`,
         date: Date.now()
     }
 }
@@ -56,5 +56,23 @@ describe('Blog post api', function () {
         return closeServer();
     });
 
+    describe('get endpoint testing', function () {
 
+        it('should return all blog posts', function () {
+            let res;
+            return chai.request(app)
+                .get('/posts')
+                .then(function (_res) {
+                    res = _res;
+                    res.should.have.status(200);
+
+                    res.body.should.have.length.of.at.least(1);
+                    return BlogPost.count();
+                })
+                .then(function (count) {
+                    res.body.should.have.length.of(count);
+                })
+        })
+    })
 })
+
