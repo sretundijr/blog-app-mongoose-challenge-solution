@@ -24,6 +24,17 @@ function createFakeBlogPost() {
     }
 }
 
+function createPostWithNoTitle() {
+    return {
+        author: {
+            firstName: "steve",
+            lastName: "Hello"
+        },
+        content: `${faker.lorem.paragraph()}`,
+        created: Date.now()
+    }
+}
+
 function seedDatabase() {
     const seedData = [];
 
@@ -119,6 +130,17 @@ describe('Blog post api', function () {
                     post.title.should.equal(newPost.title);
                 })
         })
+
+        // it('should test required content by not allowing a new post', function () {
+        //     let badPost = createPostWithNoTitle();
+        //     return chai.request(app)
+        //         .post('/posts')
+        //         .send(badPost)
+        //     // .then(function (res) {
+        //     // res.should.throw(Error)
+        //     // res.should.not.equal.status(201);
+        //     // })
+        // })
     })
 })
 
