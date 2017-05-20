@@ -12,6 +12,16 @@ const { TEST_DATABASE_URL } = require('../config');
 
 chai.use(chaiHttp);
 
+function callGetEndpointSingleDoc(app) {
+    let post;
+    return chai.request(app)
+        .get('/posts')
+        .then(function (res) {
+            post = res.body[0];
+            return post;
+        })
+}
+
 function createFakeBlogPost() {
     return {
         author: {
@@ -147,13 +157,14 @@ describe('Blog post api', function () {
     describe('testing delete', function () {
 
         it('should delete a document', function () {
-            let deletedPost;
-            return chai.request(app)
-                .get('/posts')
-                .then(function (res) {
-                    deletedPost = res.body[0];
-                    return deletedPost;
-                })
+            // let deletedPost;
+            // return chai.request(app)
+            //     .get('/posts')
+            //     .then(function (res) {
+            //         deletedPost = res.body[0];
+            //         return deletedPost;
+            //     })
+            callGetEndpointSingleDoc(app)
                 .then(function (post) {
                     return chai.request(app)
                         .delete(`/posts/${post.id}`)
@@ -165,6 +176,13 @@ describe('Blog post api', function () {
                 .then(function (_post) {
                     should.not.exist(_post)
                 })
+        })
+    })
+
+    describe('testing update endpoint', function () {
+
+        it('should update a document', function () {
+
         })
     })
 })
