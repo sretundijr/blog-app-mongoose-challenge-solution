@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: EhhOTg0pH3dFnsstaMNowlaw5LPS0hSAwlMCBoJDhWY8XH57h9W3KzDXXHuvV24GlZtal2QxqVeyA7plPAOOtWzuK+uBjXoTeFlo4NjsygjqxjTwuFcE8t877wfhqY/ier7zubN1DKnYuQ3vLyAK2++QEU78AMYrmnyYOBndJYkegEDZ9NQRhxUSleWtWnfeaSdOlS20PmtS7Ik2CztGngwHArpvHifHbhLuh64ZpZuJisd18yWYOE90V4o3JW+IjzttteIFVEdXln87FaUXF4da/M3sgdO8ylhbvIM5W4e9+hUMLT0ZkhMx2V1/Uv5J+GJO52dXiY7kih5NWegN1Bb/uKaB0vuhfC3HzXFhbi7YBVPzUwtsvEcnN8qiPY7Fmroa1+AUR2GaZPB0cgdockUVgbAZ8M+16haRBQ/5zIybI61EhvtvPYYw14qhuHAILfQDz8dvhsnPHsCUcKtRqUeBGYzUCgQiz/O5a51iy0v9sGS2JESQFaUrgjjH5CTKLWuFMnoY0gEeGEjrIsled2d6rRcE86cYKTCq/dngGxo4spvX7DrjSqcPbxoNiL8YdQxzRLN9T1Ne7WTIVOpVG4rQLO4eKEQeZ+VmAwaB5yWL9eD9lik/J6F3jQOCL4BcWvYkNthgqs3ajV+sw8O9ZgyEwLAEeUyWMP/42NAbafE=
+  app: ancient-citadel-27883
+  on:
+    repo: sretundijr/blog-app-mongoose-challenge-solution

@@ -120,7 +120,7 @@ describe('Blog post api', function () {
                 })
                 .then(function (post) {
                     responseBlogPost.id.should.equal(post.id);
-                    //ugly
+                    //ugly find a better way later
                     let formattedAuthor = `${post.author.firstName} ${post.author.lastName}`.trim();
                     responseBlogPost.author.should.equal(formattedAuthor);
                     responseBlogPost.content.should.equal(post.content);
