@@ -168,7 +168,7 @@ describe('Blog post api', function () {
                 })
                 .then(function (res) {
                     res.should.have.status(204);
-                    return BlogPost.findById(deletedPost.id).exec()
+                    return BlogPost.findById(res.body.id).exec()
                 })
                 .then(function (_post) {
                     should.not.exist(_post)
@@ -178,14 +178,18 @@ describe('Blog post api', function () {
 
     describe('testing update endpoint', function () {
 
+        function sendUpdate(post, update) {
+
+        }
+
         it('should update a document', function () {
-            const updates = { content: contentChangeHelper() };
+            let update = { id: '', content: contentChangeHelper() };
             callGetEndpointSingleDoc(app)
                 .then(function (post) {
-                    updates.id = post.id;
+                    update.id = post.id;
                     return chai.request(app)
-                        .put(`/posts/${updates.id}`)
-                        .send(updates)
+                        .put(`/posts/${update.id}`)
+                        .send(update)
                 })
                 .then(function (res) {
                     res.should.have.status(204);
@@ -196,6 +200,21 @@ describe('Blog post api', function () {
                     updatedPost.title.should.equal(updates.title);
                 })
         })
+
+        it('sends an empty string', function () {
+            const badUpdate = { content: "" };
+            callGetEndpointSingleDoc(app, badUpdate)
+                .then(function (post) {
+                    badUpdate.id = post.id;
+                    return chai.request(app)
+                        .put(`/posts/${badUpdate.id}`)
+                        .send(badUpdate)
+                })
+                .then(function (res) {
+                    res.should.have.status(404);
+                })
+        })
+
     })
 })
 
