@@ -131,6 +131,7 @@ describe('Blog post api', function () {
                 })
         })
 
+        // could we talk about this one
         // it('should test required content by not allowing a new post', function () {
         //     let badPost = createPostWithNoTitle();
         //     return chai.request(app)
@@ -141,6 +142,30 @@ describe('Blog post api', function () {
         //     // res.should.not.equal.status(201);
         //     // })
         // })
+    })
+
+    describe('testing delete', function () {
+
+        it('should delete a document', function () {
+            let deletedPost;
+            return chai.request(app)
+                .get('/posts')
+                .then(function (res) {
+                    deletedPost = res.body[0];
+                    return deletedPost;
+                })
+                .then(function (post) {
+                    return chai.request(app)
+                        .delete(`/posts/${post.id}`)
+                })
+                .then(function (res) {
+                    res.should.have.status(204);
+                    return BlogPost.findById(deletedPost.id).exec()
+                })
+                .then(function (_post) {
+                    should.not.exist(_post)
+                })
+        })
     })
 })
 
