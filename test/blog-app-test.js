@@ -22,6 +22,10 @@ function callGetEndpointSingleDoc(app) {
         })
 }
 
+function contentChangeHelper() {
+    return `${faker.lorem.paragraph()}`
+}
+
 function createFakeBlogPost() {
     return {
         author: {
@@ -157,13 +161,6 @@ describe('Blog post api', function () {
     describe('testing delete', function () {
 
         it('should delete a document', function () {
-            // let deletedPost;
-            // return chai.request(app)
-            //     .get('/posts')
-            //     .then(function (res) {
-            //         deletedPost = res.body[0];
-            //         return deletedPost;
-            //     })
             callGetEndpointSingleDoc(app)
                 .then(function (post) {
                     return chai.request(app)
@@ -182,7 +179,22 @@ describe('Blog post api', function () {
     describe('testing update endpoint', function () {
 
         it('should update a document', function () {
-
+            const updates = { content: contentChangeHelper() };
+            callGetEndpointSingleDoc(app)
+                .then(function (post) {
+                    updates.id = post.id;
+                    return chai.request(app)
+                        .put(`/posts/${updates.id}`)
+                        .send(updates)
+                })
+                .then(function (res) {
+                    res.should.have.status(204);
+                    return BlogPost.findById(updates.id).exec()
+                })
+                .then(function (updatedPost) {
+                    updatedPost.content.should.equal(updates.content);
+                    updatedPost.title.should.equal(updates.title);
+                })
         })
     })
 })
